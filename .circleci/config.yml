@@ -15,8 +15,8 @@ jobs:
     steps:
       - checkout
       - approve:
-        name: Approve deploy production
-        type: approve
+          name: Approve deploy production
+          type: approve
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
