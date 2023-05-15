@@ -20,7 +20,7 @@ jobs:
       - run:
           name: "Check branch & deploy environment"
           command:  |
-            if [ << parameters.deploy_env >> = "prod" && "$CIRCLE_BRANCH" = "circleci-project-setup" ]; then
+            if [ << parameters.deploy_env >> = prod && "$CIRCLE_BRANCH" = "circleci-project-setup" ]; then
                 circleci-agent step halt
             fi
       - run:
