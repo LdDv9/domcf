@@ -6,6 +6,9 @@ version: 2.1
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   say-hello:
+    parameters:
+      deploy_env:
+        type: string
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
@@ -14,9 +17,12 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
-      - approve:
-          name: Approve deploy production
-          type: approve
+      - run:
+          name: "Check branch & deploy environment"
+          command:  |
+            if [ << parameters.deploy_env >> = "prod" && "$CIRCLE_BRANCH" = "circleci-project-setup"]; then
+                circleci-agent step halt
+            fi
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
@@ -26,4 +32,6 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - say-hello:
+          deploy_env: prod
+
