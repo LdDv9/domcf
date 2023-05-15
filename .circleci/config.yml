@@ -20,8 +20,7 @@ jobs:
           name: "Check branch & deploy environment"
           command:  |
             if [ << parameters.deploy_env >> == prod ] && [ "$CIRCLE_BRANCH" == "circleci-project-setup" ]; then
-                circleci-agent step halt
-                echo "You are deploying production environment with invalid branch(Require branch: release) !" 1>&2
+                echo "You are deploying production environment with invalid branch(Require branch: release)!" 1>&2
                 exit 64
             fi
       - run:
